@@ -28,6 +28,8 @@ export default {
     // 退出登录
     logout() {
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      //清除本地token
+      this.$store.commit('user/delToken')
     }
   }
 }

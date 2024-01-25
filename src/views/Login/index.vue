@@ -19,7 +19,8 @@
         </el-form-item>
 
         <el-form-item prop="remember">
-          <el-checkbox>记住我</el-checkbox>
+          <el-checkbox v-model="remember">记住我</el-checkbox>
+          <el-button @click="addUser" size="small" style="margin-left: 10px;">添加</el-button>
         </el-form-item>
 
         <el-form-item>
@@ -36,10 +37,12 @@ export default {
   name: 'Login',
   data(){
     return{
+      //登录表单
       loginForm:{
-        username:'demo',
-        password:'zh@hm#23'
+        username:'',
+        password:''
       },
+      //校验规则
       rules: {
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' }
@@ -47,19 +50,46 @@ export default {
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ]
-      }
+      },
+      //是否记住用户
+      remember:false
+    }
+  },
+  mounted(){
+    //读取本地用户信息
+    const userInfo = this.$store.state.user.userInfo
+    //本地有信息
+    if(userInfo.username !== ''){//直接读取本地
+      this.loginForm = userInfo
     }
   },
   methods:{
+    //登录
     login(){
+      //表单整体校验
       this.$refs.form.validate(async( valid ) => {
         if(valid){//校验成功
           const { username, password } = this.loginForm
           await this.$store.dispatch('user/loginAction', { username, password })
           this.$message.success('登录成功')
-          this.$router.push('/')
+          //是否记住用户
+          if(this.remember){//记住
+            this.$store.commit('user/setUserInfo',this.loginForm)
+          }
+          else{
+            this.$store.commit('user/delUserInfo')
+          }
+          //跳转
+          this.$router.push(this.$route.query.redirect ? this.$route.query.redirect : '/')
         }
       })
+    },
+    //方便写代码
+    addUser(){
+      this.loginForm = {
+        username:'demo',
+        password:'zh@hm#23'
+      }
     }
   }
 }

@@ -3,12 +3,28 @@ export default {
   namespaced : true,
   state: () => {
     return {
-      token: ''
+      token: '',
+      userInfo:{
+        username:'',
+        password:''
+      }
     }
   },
   mutations: {
     setToken(state, token) {
       state.token = token
+    },
+    delToken(state) {
+      state.token = ''
+    },
+    setUserInfo(state, userInfo) {
+      state.userInfo = userInfo
+    },
+    delUserInfo(state) {
+      state.userInfo = {
+        username:'',
+        password:''
+      }
     }
   },
   actions: {
