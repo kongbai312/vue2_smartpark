@@ -11,9 +11,15 @@ export const routes = [
     component: Layout,
     redirect: "/workbench",
   },
+  //添加月卡
   {
     path: '/cardAdd',
     component: () => import('@/views/Car/CarCard/addCard.vue')
+  },
+  //添加企业
+  {
+    path: '/enterpriseAdd',
+    component: () => import('@/views/Park/Enterprise/addEnterprise.vue')
   },
   {
     path: "/workbench",

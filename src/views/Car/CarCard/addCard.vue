@@ -183,7 +183,7 @@ export default {
                 // 新增
                 await createCardAPI(payload)
               }
-              this.$message.success(id ? '修改成功' : '新增成功')
+              this.$message.success(this.id ? '修改成功' : '新增成功')
               this.$router.back()
             }
           })
